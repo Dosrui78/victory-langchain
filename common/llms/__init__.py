@@ -1,4 +1,4 @@
-from .chat_models import get_model, get_fallback_llm, dashscope_LLM, openai_LLM, deepseek_LLM
+from .chat_models import get_model, get_fallback_llm, dashscope_LLM, openai_LLM, deepseek_LLM, ollama_LLM
 
 __all__ = [
     "get_model",
@@ -6,4 +6,5 @@ __all__ = [
     "dashscope_LLM",
     "openai_LLM",
     "deepseek_LLM",
+    "ollama_LLM",
 ]

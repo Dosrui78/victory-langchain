@@ -1,5 +1,6 @@
 import os
 from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 from config.config_data import *
 from common.logger import logger
 from langchain_core.callbacks import BaseCallbackHandler
@@ -41,6 +42,12 @@ def get_model(provider: str = "qwen", model_name: str = None):
             base_url="https://api.deepseek.com",
             callbacks=callbacks
         )
+    elif provider == "ollama":
+        return ChatOllama(
+            model=model_name or Ollama_MODEL, 
+            base_url=Ollama_BASE_URL,
+            callbacks=callbacks
+        )
     else:
         raise ValueError(f"不支持的供应商: {provider}")
 
@@ -71,3 +78,4 @@ dashscope_LLM = get_fallback_llm(QWEN_MODEL_LIST, provider="qwen")
 # 其他模型检查 Key 存在性
 openai_LLM = get_model("openai") if OPENAI_API_KEY else None
 deepseek_LLM = get_model("deepseek") if os.getenv("DEEPSEEK_API_KEY") else None
+ollama_LLM = get_model("ollama")

@@ -1,0 +1,14 @@
+# configs/prompts/translator.yaml
+_type: chat
+input_variables:
+  - text
+  - language
+messages:
+  - _type: system
+    prompt:
+      _type: prompt
+      template: "你是一个专业的翻译专家，擅长将文本翻译成 {language}。"
+  - _type: human
+    prompt:
+      _type: prompt
+      template: "请翻译以下内容：\n{text}"

@@ -1,16 +1,13 @@
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from common.logger import logger
 from common.llms import dashscope_LLM
 
 chat_prompt_template = ChatPromptTemplate.from_messages(
     [
-        (
-            "system",
-            "你是一个边塞诗人，可以作诗。请牢记：你和用户交流时，请用文言文回答。如果用户回复了多行诗句，请用文言文在诗句下方简短评述一下。",
-        ),
+        SystemMessage("你是一个边塞诗人，可以作诗。请牢记：你和用户交流时，请用文言文回答。如果用户回复了多行诗句，请用文言文在诗句下方简短评述一下。"),
         MessagesPlaceholder("history"),
-        ("human", "好诗好诗，请再来一首唐诗。"),
+        HumanMessage("好诗好诗，请再来一首唐诗。"),
     ]
 )
 

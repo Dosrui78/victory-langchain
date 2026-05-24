@@ -13,6 +13,22 @@ class ModelLoggingHandler(BaseCallbackHandler):
         model_name = params.get("model_name", "未知模型")
         logger.info(f"🚀 正在发送请求到模型: {model_name}")
 
+
+def _require_api_key(provider: str, api_key):
+    """确保传入 ChatOpenAI 的 key 是非空字符串，避免底层 SDK 报错过深。"""
+    if not isinstance(api_key, str):
+        raise ValueError(
+            f"{provider} API Key 必须是字符串，当前收到: {type(api_key).__name__}"
+        )
+
+    api_key = api_key.strip()
+    if not api_key:
+        raise ValueError(f"{provider} API Key 未配置，请检查 .env 或环境变量")
+
+    return api_key
+
+
+
 def get_model(provider: str = "qwen", model_name: str = None):
     """基础模型初始化函数"""
     # 实例化回调处理器
@@ -20,25 +36,25 @@ def get_model(provider: str = "qwen", model_name: str = None):
     
     if provider == "qwen":
         return ChatOpenAI(
-            model_name=model_name or DEFAULT_QWEN_MODEL,    
+            model_name=model_name or DEFAULT_QWEN_MODEL,
             temperature=TEMPERATURE,
-            api_key=QWEN_API_KEY,
+            api_key=_require_api_key("Qwen", QWEN_API_KEY),
             base_url=QWEN_BASE_URL,
             callbacks=callbacks
         )
     elif provider == "openai":
         return ChatOpenAI(
-            model_name=model_name or "gpt-4o", 
-            temperature=TEMPERATURE, 
-            api_key=OPENAI_API_KEY, 
+            model_name=model_name or "gpt-4o",
+            temperature=TEMPERATURE,
+            api_key=_require_api_key("OpenAI", OPENAI_API_KEY),
             base_url=OPENAI_BASE_URL,
             callbacks=callbacks
         )
     elif provider == "deepseek":
         return ChatOpenAI(
-            model_name=model_name or "deepseek-chat", 
-            temperature=TEMPERATURE, 
-            api_key=os.getenv("DEEPSEEK_API_KEY"), 
+            model_name=model_name or "deepseek-chat",
+            temperature=TEMPERATURE,
+            api_key=_require_api_key("DeepSeek", os.getenv("DEEPSEEK_API_KEY")),
             base_url="https://api.deepseek.com",
             callbacks=callbacks
         )

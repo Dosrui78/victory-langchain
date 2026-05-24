@@ -74,7 +74,7 @@ uv sync
    在根目录下创建 `.env` 文件，并添加你的 OpenAI API 密钥：
    ```env
    OPENAI_API_KEY=your_sk_key_here
-   OPENAI_API_BASE=https://api.openai.com/v1  # 可选，如果使用代理
+   OPENAI_BASE_URL=https://api.openai.com/v1  # 可选，如果使用代理
    ```
 
 2. **运行第一个示例**:
@@ -104,4 +104,4 @@ uv sync
 
 <p align="center">
   <i>如果这个教程对你有帮助，请点一个 ⭐ 鼓励一下吧！</i>
-</p>
+</p>

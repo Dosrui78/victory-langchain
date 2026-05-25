@@ -1,7 +1,6 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableLambda
 from langchain_core.output_parsers import StrOutputParser
-from common.logger import logger
 from common.llms import dashscope_LLM
 
 str_parser = StrOutputParser()

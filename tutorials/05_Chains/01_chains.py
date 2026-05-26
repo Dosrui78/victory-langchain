@@ -1,4 +1,4 @@
-from langchain_core.runnables import RunnableLambda, RunnableSerializable
+from langchain_core.runnables import  RunnableSerializable
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from common.llms import dashscope_LLM
 
